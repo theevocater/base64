@@ -25,7 +25,7 @@ class MyBase64
     while i < string.size
       curr = string[i].ord
       mod = i % 3
-      result += case mod 
+      result += case mod
                 when 0
                   encode_case0(curr)
                 when 1
@@ -37,7 +37,7 @@ class MyBase64
       prev = curr
     end
 
-    result += case mod 
+    result += case mod
               when 0
                 [@@alphabet[(prev & 3) << 4], "=="]
               when 1
@@ -75,29 +75,27 @@ class MyBase64
   # AAAAAABB-BBBBCCCC-CCDDDDDD
   def self.decode64(string)
     string = string.gsub(/=+$/,"")
-
     prev = 0
     i = 0
-    result = []
-    while i < string.size
+    string.chars.map {
       curr = @@alphabet.index(string[i])
       mod = i % 4
-      result += case mod
-                when 0
-                  []
-                when 1
-                  decode_case0(prev, curr)
-                when 2
-                  decode_case1(prev, curr)
-                when 3
-                  decode_case2(prev, curr)
-                end
+      result =
+        case mod
+        when 0
+          []
+        when 1
+          decode_case0(prev, curr)
+        when 2
+          decode_case1(prev, curr)
+        when 3
+          decode_case2(prev, curr)
+        end
 
       i += 1
       prev = curr
-    end
-
-    result.join()
+      result
+    }.flatten.join
   end
 end
 
