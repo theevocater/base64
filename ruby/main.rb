@@ -34,8 +34,6 @@ class MyBase64
                   encode_case1(prev, curr)
                 when 2
                   encode_case2(prev, curr)
-                else
-                  []
                 end
       i += 1
       prev = curr
