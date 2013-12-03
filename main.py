@@ -4,6 +4,10 @@ import string
 
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 
+class BadParams:
+    def __init__(self, *args):
+        print args
+
 def encode_case0(x):
     return [alphabet[x >> 2]]
 
@@ -48,13 +52,24 @@ def encode64(string):
 # AAAAAA-BBBBBB-CCCCCC-DDDDDD
 # AAAAAABB-BBBBCCCC-CCDDDDDD
 def decode_case0(x, y):
+    if not check_params_decode(x, y):
+        raise BadParams, (x, y)
     return [chr(x << 2 | y >> 4)]
 
 def decode_case1(x, y):
+    if not check_params_decode(x, y):
+        raise BadParams, (x, y)
     return [chr((x & 15) << 4 | y >> 2)]
 
 def decode_case2(x, y):
+    if not check_params_decode(x, y):
+        raise BadParams, (x, y)
     return [chr((x & 3) << 6 | y)]
+
+def check_params_decode(x, y):
+    check_x = (x >= 0 and x < len(alphabet))
+    check_y = (y >= 0 and y < len(alphabet))
+    return check_x and check_y
 
 def decode64(string):
     if len(string) == 0:
