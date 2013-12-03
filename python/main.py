@@ -20,11 +20,9 @@ def encode_case2(x, y):
 # AAAAAAAA-BBBBBBBB-CCCCCCCC
 # AAAAAA-AABBBB-BBBBCC-CCCCCC
 def encode64(string):
-    if len(string) == 0:
-        return ""
-
     prev = None
     i = 0
+    mod = -1
     result = []
     length = len(string)
     while i < length:
@@ -72,9 +70,6 @@ def check_params_decode(x, y):
     return check_x and check_y
 
 def decode64(string):
-    if len(string) == 0:
-        return ""
-
     string = string.rstrip("=")
 
     prev = None
