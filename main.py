@@ -10,6 +10,8 @@
 #6 bits
 #bit4 = ord(x[2]) & 63
 import base64
+import random
+import string
 
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 
@@ -23,6 +25,9 @@ def case2(x, y):
     return [ alphabet[(x & 15) << 2 | y >> 6], alphabet[y & 63]]
 
 def encode64(string):
+    if len(string) == 0:
+        return ""
+
     prev = None
     i = 0
     result = []
@@ -50,12 +55,19 @@ def encode64(string):
     return "".join(result)
 
 
+# "unit tests"
 print case0(104) == ["a"]
 print case1(104, 97) == ["G"]
 print case2(97, 116) == ["F", "0"]
 
-the_string = "hatch"
+print encode64("")
 
-print encode64(the_string)
-print encode64(the_string) == base64.b64encode(the_string)
-
+iterations = random.randint(50, 200)
+for i in range(iterations):
+    str_length = random.randint(1, 100)
+    the_string = ''.join(random.choice(string.printable) for x in range(str_length))
+    print encode64(the_string)
+    if encode64(the_string) != base64.b64encode(the_string):
+        print "Failed on " + the_string
+        print base64.b64encode(the_string)
+        print encode64(the_string)
