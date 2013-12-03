@@ -20,22 +20,23 @@ class MyBase64
     prev = 0
     i = 0
     mod = -1
-    result = []
 
-    while i < string.size
-      curr = string[i].ord
+    result = string.chars.map { |char|
+      curr = char.ord
       mod = i % 3
-      result += case mod
-                when 0
-                  encode_case0(curr)
-                when 1
-                  encode_case1(prev, curr)
-                when 2
-                  encode_case2(prev, curr)
-                end
+      result =
+        case mod
+        when 0
+          encode_case0(curr)
+        when 1
+          encode_case1(prev, curr)
+        when 2
+          encode_case2(prev, curr)
+        end
       i += 1
       prev = curr
-    end
+      result
+    }
 
     result += case mod
               when 0
@@ -46,7 +47,7 @@ class MyBase64
                 []
               end
 
-    result.join()
+    result.flatten.join()
   end
 
   def self.decode_case0(x, y)
@@ -77,8 +78,8 @@ class MyBase64
     string = string.gsub(/=+$/,"")
     prev = 0
     i = 0
-    string.chars.map {
-      curr = @@alphabet.index(string[i])
+    string.chars.map { |char|
+      curr = @@alphabet.index(char)
       mod = i % 4
       result =
         case mod
