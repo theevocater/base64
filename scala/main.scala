@@ -38,6 +38,7 @@ object MyBase64 {
     List((x << 2 | y >> 4).toChar)
   }
 
+  // TODO(jake) this is wrong
   def decode_case1(x: Int, y: Int): List[Char] = {
     check_params_decode(x, y)
     List(((x & 15) << 4 | y >> 2).toChar)
@@ -65,6 +66,7 @@ object MyBase64 {
     if (string.length % 4 != 0)
       throw new RuntimeException("Not a valid base64 string")
 
+    // TODO(jake) maybe change the order of the mapping here
     string.grouped(4).map( chars => {
       chars.toList.map(alphabet.indexOf(_)) match {
         case a :: b :: c :: d :: Nil => {
