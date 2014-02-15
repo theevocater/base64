@@ -15,36 +15,26 @@ class MyBase64
   # AAAAAAAA-BBBBBBBB-CCCCCCCC
   # AAAAAA-AABBBB-BBBBCC-CCCCCC
   def self.encode64(string)
-    prev = 0
-    i = 0
-    mod = -1
-
-    result = string.chars.map { |char|
-      curr = char.ord
-      mod = i % 3
-      result =
-        case mod
-        when 0
-          encode_case0(curr)
+    result = []
+    (string.chars.each_slice(3) { |chars|
+      chars.map! { |char| char.ord }
+      case chars.length
         when 1
-          encode_case1(prev, curr)
+          result +=
+            encode_case0(chars[0]) +
+            [@@alphabet[(chars[0] & 3) << 4], "=="]
         when 2
-          encode_case2(prev, curr)
-        end
-      i += 1
-      prev = curr
-      result
-    }
-
-    result += case mod
-              when 0
-                [@@alphabet[(prev & 3) << 4], "=="]
-              when 1
-                [@@alphabet[(prev & 15) << 2], "="]
-              else
-                []
-              end
-
+          result +=
+            encode_case0(chars[0]) +
+            encode_case1(chars[0], chars[1]) +
+            [@@alphabet[(chars[1] & 15) << 2], "="]
+        when 3
+          result +=
+            encode_case0(chars[0]) +
+            encode_case1(chars[0], chars[1]) +
+            encode_case2(chars[1], chars[2])
+      end
+    })
     result.flatten.join()
   end
 
