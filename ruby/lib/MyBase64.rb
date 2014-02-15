@@ -64,26 +64,27 @@ class MyBase64
   # AAAAAABB-BBBBCCCC-CCDDDDDD
   def self.decode64(string)
     string = string.gsub(/=+$/,"")
-    prev = 0
-    i = 0
-    string.chars.map { |char|
-      curr = @@alphabet.index(char)
-      mod = i % 4
-      result =
-        case mod
-        when 0
-          []
+    result = []
+    string.chars.each_slice(4) { |chars|
+      chars.map! { |char| @@alphabet.index(char) }
+      case chars.length
         when 1
-          decode_case0(prev, curr)
+          raise "Malformed Input"
         when 2
-          decode_case1(prev, curr)
+          result +=
+            decode_case0(chars[0], chars[1])
         when 3
-          decode_case2(prev, curr)
-        end
+          result +=
+            decode_case0(chars[0], chars[1]) +
+            decode_case1(chars[1], chars[2])
+        when 4
+          result +=
+            decode_case0(chars[0], chars[1]) +
+            decode_case1(chars[1], chars[2]) +
+            decode_case2(chars[2], chars[3])
+      end
 
-      i += 1
-      prev = curr
-      result
-    }.flatten.join
+    }
+    result.flatten.join()
   end
 end
