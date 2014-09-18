@@ -23,5 +23,5 @@ A tiny implementation of a simply base64 algorithm in a few languages
 * Go
   * Attempted; failed
 * Rust
-  * Attempted; failed
+  * In progress, using cargo, have the encoding phase done
 
