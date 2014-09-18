@@ -1,3 +1,6 @@
+// this is kind of a gross hack to get a static vector of characters
+//
+// probably a better way
 static alphabetVec: &'static [char] = &['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/', '='];
 
 fn encode_case0(x: u8) -> char {
@@ -18,12 +21,17 @@ fn encode_case3(x: u8) -> char  {
     return alphabetVec[(x & 63).to_uint().unwrap()];
 }
 
-fn encode64<'r>(input_str: &'r str) -> String {
+fn encode64(input_str: &str) -> String {
     let mut output_string = String::new();
     let vec_bytes: Vec<u8> = input_str.bytes().collect();
+    // I still don't understand why this is mut. does the for destroy it?
     let mut chunked_bytes = vec_bytes.as_slice().chunks(3);
 
+    // if i don't do this weird extra block the borrow checker seems to not
+    // see the 'push_chars' go out of scope and thinks I'm borrowing
+    // output_string outside of the function
     {
+        // this isn't super necessary but it looks nice i guess
         let push_chars = |a: char, b: char, c: char, d: char| {
             output_string.push_char(a);
             output_string.push_char(b);
@@ -31,7 +39,6 @@ fn encode64<'r>(input_str: &'r str) -> String {
             output_string.push_char(d);
         };
         for bytes in chunked_bytes {
-            print!("bytes: {} \n", bytes);
             match bytes {
                 [x, y, z] => {
                     push_chars(encode_case0(x),
