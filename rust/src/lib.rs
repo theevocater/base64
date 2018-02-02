@@ -24,7 +24,7 @@ fn encode_case3(x: u8) -> char  {
 fn encode64(input_str: &str) -> String {
     let mut output_string = String::new();
     let vec_bytes: Vec<u8> = input_str.bytes().collect();
-    // I still don't understand why this is mut. does the for destroy it?
+    // I still don't understand why this is mut. does the for consume it?
     let mut chunked_bytes = vec_bytes.as_slice().chunks(3);
 
     // if i don't do this weird extra block the borrow checker seems to not
@@ -95,3 +95,58 @@ fn encode64_test() {
     assert_eq!(encode64("hatche").as_slice(), "aGF0Y2hl");
     assert_eq!(encode64("").as_slice(), "");
 }
+
+fn get_index(x: char) -> Option<uint> {
+    return alphabetVec.iter().position(| y: &char | -> bool { return x == *y });
+}
+
+// AAAAAA-BBBBBB-CCCCCC-DDDDDD
+// AAAAAABB-BBBBCCCC-CCDDDDDD
+fn decode_case0(x: u8, y: u8) -> u8 {
+    return x << 2 | y >> 4;
+}
+
+fn decode_case1(x: u8, y: u8) -> u8 {
+    return ((x & 15) << 4) | (y >> 2);
+}
+
+fn decode_case2(x: u8, y: u8) -> u8  {
+    return ((x & 3) << 6) | y;
+}
+
+fn decode64(input_str: &str) -> String {
+    let mut output_string = String::new();
+    let vec_bytes: Vec<u8> = input_str.bytes().collect();
+    let mut chunked_bytes = vec_bytes.as_slice().chunks(4);
+
+
+}
+
+#[test]
+fn get_index_test() {
+    assert_eq!(get_index('A'), Some(0));
+    assert_eq!(get_index('/'), Some(63));
+    assert_eq!(get_index('!'), None);
+}
+
+#[test]
+fn decode_case0_test() {
+    let a = 26;
+    let G = 6;
+    assert_eq!(decode_case0(a, G), 104);
+}
+
+#[test]
+fn decode_case1_test() {
+    let G = 6;
+    let F = 5;
+    assert_eq!(decode_case1(G, F), 97);
+}
+
+#[test]
+fn decode_case2_test() {
+    let F = 5;
+    let zero = 52;
+    assert_eq!(decode_case2(F, zero), 116);
+}
+
