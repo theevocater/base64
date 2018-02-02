@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>27B5F90B-7949-48E5-B721-87A14DE4E9D6</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MyBase64Playground</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>737702214F30A390CAB2B8534D1CE7271CE92EE1</key>
+		<string>github.com:theevocater/base64.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>swift/MyBase64Playground.playground</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>737702214F30A390CAB2B8534D1CE7271CE92EE1</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:theevocater/base64.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>737702214F30A390CAB2B8534D1CE7271CE92EE1</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>737702214F30A390CAB2B8534D1CE7271CE92EE1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>base64</string>
+		</dict>
+	</array>
+</dict>
+</plist>
